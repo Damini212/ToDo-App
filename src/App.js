@@ -1,47 +1,66 @@
 import React from "react";
 import "./App.css";
+import NoteList from "./NoteList";
+import { nanoid } from "nanoid";
+import Navbar from "./Navbar";
 
-function App() {
-  const [game, setGame] = React.useState({
-    questions: "",
-    answer: "",
-  });
-  const [questions, setQuestions] = React.useState([]);
+export default function App() {
+  const [notes, setNotes] = React.useState(
+    JSON.parse(localStorage.getItem("notes")) || [
+      {
+        id: nanoid(),
+        text: "Buy groceries",
+        date: new Date().toLocaleDateString(),
+      },
+      {
+        id: nanoid(),
+        text: "Fill petrol",
+        date: new Date().toLocaleDateString(),
+      },
+    ]
+  );
+  const [searchTerm, setSearchTerm] = React.useState("");
+  const [darkmode, setDarkmode] = React.useState();
 
-  React.useEffect(() => {
-    fetch("https://opentdb.com/api.php?amount=5")
-      .then((res) => res.json())
-      .then((data) => setQuestions(data.results));
-  }, []);
-
-  function newGame() {
-    const randomNumber = Math.floor(Math.random() * game.length);
-    const question = game[randomNumber].question;
-    setGame((prevGame) => ({
-      ...prevGame,
-      questions: question,
-    }));
+  function toggle() {
+    setDarkmode(!darkmode);
   }
 
-  console.log(questions);
+  function addNote(text) {
+    const date = new Date();
+    setNotes(
+      notes.concat({
+        id: nanoid(),
+        text: text,
+        date: date.toLocaleDateString(),
+      })
+    );
+  }
+
+  function deleteNote(id) {
+    setNotes(notes.filter((item) => item.id != id));
+  }
+  function handleChange(event) {
+    setSearchTerm(event.target.value);
+  }
+  React.useEffect(() => {
+    localStorage.setItem("notes", JSON.stringify(notes));
+  }, [notes]);
 
   return (
-    <div>
-      <h1>Quizzical Game</h1>
-      {questions.map((question) => (
+    <div className={darkmode ? "page darkmode" : "page lightmode"}>
+      <div class="page-inner">
+        <Navbar handleChange={handleChange} toggle={toggle} />
         <div>
-          <h3>{question.question}</h3>
-          <div>
-            {question.incorrect_answers
-              .concat(question.correct_answer)
-              .map((answer) => (
-                <h4>{answer}</h4>
-              ))}
-          </div>
+          <NoteList
+            notes={notes.filter((note) =>
+              note.text.toLocaleLowerCase().includes(searchTerm)
+            )}
+            handleAddNote={addNote}
+            deleteNote={deleteNote}
+          />
         </div>
-      ))}
+      </div>
     </div>
   );
 }
-
-export default App;

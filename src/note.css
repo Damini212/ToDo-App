@@ -1,0 +1,67 @@
+.note {
+  background-color: white;
+  display: grid;
+  padding: 16px;
+  border-radius: 4px;
+  grid-template-columns: repeat(auto-fit, minmax(250, 1fr));
+  max-width: 300px;
+  color: black;
+  box-shadow: 2px 5px 15px rgba(0, 0, 0, 0.2);
+  border: 1px solid #e5e5e5;
+}
+
+.note-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.note-list {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 20px;
+}
+.delete-icon {
+  height: 10px;
+}
+
+.new-note {
+  background-image: linear-gradient(to left top, #ffffcd, white);
+  display: grid;
+  padding: 16px;
+  border-radius: 4px;
+  grid-template-columns: repeat(auto-fit, minmax(250, 1fr));
+  color: black;
+  box-shadow: 2px 5px 15px rgba(0, 0, 0, 0.2);
+  border: 1px solid #e5e5e5;
+}
+
+.new-note:has(textarea:focus) {
+  background-image: linear-gradient(to left top, #ffff85, white);
+}
+
+textarea {
+  border: none;
+  resize: none;
+  background: transparent;
+}
+textarea:focus {
+  outline: none;
+}
+
+.new-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: large;
+}
+.save {
+  border-radius: 5px;
+  border: 1px solid #03100e;
+  background-color: #4aecdc;
+  cursor: pointer;
+}
+.delete-icon {
+  cursor: pointer;
+  height: 30px;
+}
