@@ -5,7 +5,7 @@ export default function Navbar({ handleChange, toggle }) {
   return (
     <div>
       <div className="navbar">
-        <h1 className="title">Notes</h1>
+        <h1 className="title">Notes App</h1>
         <button className="toggle-btn button" onClick={toggle}>
           toggle
         </button>
