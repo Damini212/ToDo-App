@@ -1,4 +1,3 @@
-import { count } from "mathjs";
 import React from "react";
 import "./note.css";
 
